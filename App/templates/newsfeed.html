@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>NewsFeed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+
+
+    
+<!-- Optional theme -->
+  </head>
+  <body>
+    <div class="header">
+  
+      <h1 style ="color:rgb(238, 236, 236)">
+        <i class="far fa-newspaper" id="logo" style="color: white;"></i>
+        Get the latest news on our website
+      </h1>
+      
+      <div class="urls">
+      
+        <a href="{% url 'newsfeed' %}" id="news">NewsFeed</a>
+        <a href="{% url 'topheadlines' %}" id="news">Top Articles</a>
+        <a href="{% url 'sources' %}" id="news">Sources</a>
+      </div>
+
+      <div class="category">
+        <ul>
+          {% for category in categories %}
+            <li><a href="{% url 'fcategory' category %}" class="category">{{category}}</a></li>
+          {% endfor %}
+        </ul>
+      </div>      
+    </div>  
+
+    <div class="search">
+      <form action="{% url 'search' %}" method="GET" class="fsearch">
+        <input type="search" name="q" id="q" placeholder=" Search for the latest news, article or newspaper">
+        <button class="searchbtn">
+          <i class="fas fa-search" id="searchbtn" style="color: rgb(66, 66, 66);"></i>
+        </button>
+      </form>
+    </div>
+
+    </div>
+  
+    <div class="container">
+      {% for title , url, img, author, desc, publishedat, source in mylist %}
+
+          <div class="article">
+                <img src="{{ img }}" alt="" class="img" style="height: 300px; width: 500px;">
+            
+                <div class="content">
+
+                    {% if source != None %}
+                      <a href="{% url 'osources' source %}" class="source">{{ source }}</a>
+                    {% else %}
+                      <p></p>
+                    {% endif %}
+
+                      <a href="{% url 'article' title %}">
+                          <h1 class="title">{{ title }}</h1>
+                      </a>
+                        {{ value|linebreaks }}
+                        <p id='date'>{{publishedat}}</p>
+                        <p id="author">
+                          {% if author %}
+                            {{author}}
+                          {% else %}
+                            <p></p>
+                          {% endif %}
+                        </p>
+            
+                        <h4 class="description">{{ desc }}</h4>
+                        {{ value|linebreaks }}
+                </div>
+          </div>
+          
+      {% endfor %}
+    </div>
+ 
+  
+  </body>
+
+    <footer>
+      {% if pages %}
+          <div class="pagination">
+              <a href="#">&laquo;</a>
+              {% for page in pages %}
+              <form action="{% url 'newsfeed' %}" method="GET">
+                <button value="p" name="p" id="p">{{page}}</button>
+              </form>
+              {% endfor %}
+              <a href="#">&raquo;</a>
+          </div>
+      {% endif %}
+    </footer>
+
+</html>
+
+<style>
+
+.header {
+    background-color: black;
+    padding: 10px;
+  }
+
+  #logo{
+          size: 10px;
+          float: left;
+          padding: 15px;
+          margin: 0;
+  }
+
+  h1 {
+    size: 20px;
+    padding: 15px;
+  }
+
+  .search{
+    display: block;
+  }
+
+  .fsearch {
+    padding: 10px;
+    left: 50%;
+    right: 50%;
+  }
+  
+  input{
+    border-radius: 10px;
+    padding: 12px;
+    background-color: white;
+    width: 50%;
+    left: 50%;
+  }
+
+  .searchbtn{
+    background-color: rgb(255, 255, 255);
+    border-radius: 50px;
+    height: 40px;
+    width: 40px;
+  }
+
+  .category{
+    width: 100%;
+    font-family: sans-serif;
+    font-size: 15px;
+    color: white;
+  }
+
+  .urls{
+    margin: 0;
+    margin-top: 10px;
+    padding: 15px;
+    text-decoration: none !important;
+  }
+
+  .urls :hover{
+    background-color: rgb(44, 44, 44);
+    padding: 10px;
+  }
+
+  #news{
+    font-family: sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    padding: 10px;
+  }
+
+
+  .container{
+    background-color: lightgoldenrodyellow;
+    margin:0;
+    margin-top: 20px;
+    width: 100%;
+    height: 100%;
+  }
+
+  .article {
+    box-sizing: border-box;
+    height: 300px;
+    width: 1000px;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+  .img {
+    width: 40%;
+    float: left;
+    margin-bottom: 30px;
+    margin-top: 50px;
+    margin: 0;
+  }
+
+  .source {
+    font-size: 18px;
+    font-family: sans-serif;
+    color: black;
+    font-weight: bolder;
+    text-decoration: none !important;
+    padding-top: 5px;
+  }
+
+  .source :hover{
+    color: lightskyblue;
+    text-decoration: underline lightskyblue;
+    padding-top: 5px;
+  }
+
+  .content {
+    width: 50%;
+    float: right;
+  }
+
+  .title {
+    font-family: sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    color: black;
+    margin: 0;
+  }
+
+  .title :hover{
+    color: lightskyblue;
+    text-decoration: underline lightskyblue;
+  }
+
+  #date{
+    font-family: sans-serif;
+    font-size: 11px;
+    font-style: italic;
+    margin:0;
+  }
+
+  #author{
+    font-family: sans-serif;
+    font-size: 14px;
+    font-style: italic;
+    font-weight: bold;
+    margin:0;
+  }
+
+  .description {
+    font-family: sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+  }
+
+  .form{
+    cursor: pointer;
+  }
+
+  .pagination {
+  display: inline-block;
+  }
+
+
+.pagination form {
+  display: inline-block;
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+
+  .pagination form.active {
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 5px;
+}
+
+.pagination form:hover:not(.active) {
+  background-color: #ddd;
+  border-radius: 5px;
+}
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+  }
+
+  li {
+    float: left;
+    border-right:1px solid #bbb;
+    padding-right: 30px;
+  }
+
+  li:last-child {
+    border-right: none;
+  }
+
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 25px;
+    text-decoration: none;
+  }
+
+  li a:hover:not(.active) {
+    background-color: #111;
+  }
+
+  
+</style>

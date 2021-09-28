@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- Optional theme -->
+  </head>
+  <body>
+    <div class="header">
+  
+      <h1 style ="color:white">
+   Get the latest news on our website
+      </h1>
+  
+    </div>  
+
+    <div class="container">
+        {% for id, name, desc, url, cat in mylist %}
+            <div class="article">
+                
+                    <a href="{% url 'osources' id %}"><h1 class="name">{{ name }}</h1>
+                    {{ value}}
+                    </a>
+                    <p id='cat'>{{cat }}</p>
+                    
+        
+                    <h4 class="description">{{ desc }}</h4>
+                
+            </div>
+        {% endfor %}
+      </div>
+    
+    </body>
+  </html>
+  
+  <style>
+    .header {
+      background-color: black;
+      padding: 20px;
+    }
+  
+    .container{
+      background-color: lightgoldenrodyellow;
+      margin:0;
+      margin-top: 20px;
+      width: 100%;
+    }
+  
+    .article {
+      box-sizing: border-box;
+      padding: 20px;
+      width: 100%;
+      position: relative;
+    }
+  
+    .name {
+      font-family: sans-serif;
+      font-size: 25px;
+      font-weight: bold;
+      margin: 0;
+    }
+  
+    #cat{
+      font-family: sans-serif;
+      font-size: 11px;
+      font-style: italic;
+      font-weight: bold;
+      margin:0;
+      text-transform: capitalize;
+    }
+
+    .description {
+      font-family: sans-serif;
+      font-size: 15px;
+      font-weight: normal;
+      padding-top: 8px;
+    }
+    
+  </style>
